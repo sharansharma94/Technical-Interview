@@ -25,3 +25,33 @@ function findNonDuplicateInteger(input) {
 }
 
 findNonDuplicateInteger(input);
+
+function covertToBin(numb) {
+  return (numb >>> 0).toString(2);
+}
+
+function binToDec(num) {
+  return num.toString(10);
+}
+
+function findNonDuplicateInteger(input) {
+  const allCombinedBits = new Array(32).fill(0);
+
+  //O(n)
+  for (let number of input) {
+    const binary = covertToBin(number);
+    //O(1) 32 bits
+
+    console.log(binary);
+    for (
+      let i = allCombinedBits.length - binary.length;
+      i < allCombinedBits.length;
+      i++
+    ) {
+      allCombinedBits[i] = (parseInt(binary[i]) + allCombinedBits[i]) % 3;
+      console.log(binToDec(allCombinedBits.join("")));
+    }
+  }
+}
+
+findNonDuplicateInteger(input);
