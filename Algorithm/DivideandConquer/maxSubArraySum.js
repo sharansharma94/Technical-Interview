@@ -35,15 +35,15 @@ const findMidCrossMax = (array, start, end, mid) => {
   return leftMax + rightMax;
 };
 
-const findMaxSum = (array, start, end) => {
+const findMaxSumRecurs = (array, start, end) => {
   //base case
   if (start === end) return array[start];
 
   const mid = Math.floor((end + start) / 2);
   // calculate left maximun
-  const leftMax = findMaxSum(array, start, mid);
+  const leftMax = findMaxSumRecurs(array, start, mid);
   // calculate right max
-  const rightMax = findMaxSum(array, mid + 1, end);
+  const rightMax = findMaxSumRecurs(array, mid + 1, end);
   //  calculate both max
   const crossMax = findMidCrossMax(array, start, end, mid);
 
@@ -55,10 +55,25 @@ const findMaxSum = (array, start, end) => {
 };
 
 const maxSubArray = function (array) {
-  return findMaxSum(array, 0, array.length - 1);
+  return findMaxSumRecurs(array, 0, array.length - 1);
 };
 
-// maxSubArray(testcases[0]);
+const maxSubArrayBest = (array) => {
+  let currentMaxSubArray = 0;
+  let maxSubArray = Number.MIN_SAFE_INTEGER;
+  for (let index = 0; index < array.length; index++) {
+    currentMaxSubArray += array[index];
+    if (maxSubArray < currentMaxSubArray) {
+      maxSubArray = currentMaxSubArray;
+    }
+
+    if (currentMaxSubArray < 0) currentMaxSubArray = 0;
+  }
+  return maxSubArray;
+};
+
 for (let testcase of testcases) {
-  console.log(maxSubArray(testcase));
+  console.log(maxSubArrayBest(testcase));
+  // console.log(maxSubArray(testcase));
+  // console.log(maxSubArrayWorst(testcase));
 }
